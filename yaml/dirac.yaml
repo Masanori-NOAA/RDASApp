@@ -1,0 +1,60 @@
+geometry:
+ fms initialization:
+   namelist filename: DataFix/fmsmpp.nml
+   field table filename: DataFix/field_table
+ namelist filename: DataFix/input_lam_C775.nml
+ akbk: DataFix/fix/akbk61.nc
+ field metadata override: Data/fieldmetadata/tlei-gfs-restart.yaml
+ # input.nml
+ npz: 60
+ layout: [8,10]
+ io_layout: [1,1]
+ ntiles: 1 
+background:
+  datetime: 2022-05-26T19:00:00Z
+  filetype: fms restart
+  datapath: Data/bkg
+  filename_core: fv3_dynvars.nc
+  filename_trcr: fv3_tracer.nc
+  filename_sfcd: fv3_sfcdata.nc
+  filename_cplr: coupler.res
+  state variables: [eastward_wind,northward_wind,u_component_of_native_D_grid_wind,v_component_of_native_D_grid_wind,air_temperature,air_pressure_thickness,specific_humidity,cloud_liquid_ice,cloud_liquid_water,ozone_mass_mixing_ratio,phis,f10m,surface_pressure]
+background error:
+  covariance model: SABER
+  saber central block:
+    saber block name: gsi static covariance
+    read:
+      gsi akbk: DataFix/fix/akbk61.nc
+      gsi error covariance file: Data/gsibec/berror_stats
+      gsi berror namelist file: Data/gsibec/anavinfo
+      gsi berror namelist file2: Data/gsibec/gsiparm.anl
+      processor layout x direction: 8
+      processor layout y direction: 10
+      debugging deep bypass gsi B error: true
+      debugging mode: true
+  saber outer blocks:
+  - saber block name: gsi interpolation to model grid
+    gsi akbk: DataFix/fix/akbk61.nc
+    gsi error covariance file: Data/gsibec/berror_stats
+    gsi berror namelist file: Data/gsibec/anavinfo
+    gsi berror namelist file2: Data/gsibec/gsiparm.anl
+    processor layout x direction: 8
+    processor layout y direction: 10
+    debugging deep bypass gsi B error: true
+    debugging mode: true
+
+output dirac:
+  filetype: fms restart
+  datapath: Data/gsib/
+  filename_core: dirac_%id%_lam.fv_core.res.nc
+  filename_trcr: dirac_%id%_lam.fv_tracer.res.nc
+  filename_sfcd: dirac_%id%_lam.sfc_data.nc
+  filename_sfcw: dirac_%id%_lam.fv_srf_wnd.res.nc
+  filename_cplr: dirac_%id%_lam.coupler.res
+dirac:
+  ndir: 1
+  ixdir: [188]
+  iydir: [106]
+  ildir: [50]
+  itdir: [1]
+  ifdir: [air_temperature]
