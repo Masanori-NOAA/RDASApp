@@ -1,0 +1,120 @@
+
+ &SETUP
+   miter=2,niter(1)=50,niter(2)=50,niter_no_qc(1)=20,
+   write_diag(1)=.true.,write_diag(2)=.false.,write_diag(3)=.true.,
+   gencode=78,qoption=2,
+   factqmin=0.0,factqmax=0.0,
+   iguess=-1,use_gfs_ozone=.false.,
+   oneobtest=.false.,retrieval=.false.,
+   nhr_assimilation=3,l_foto=.false.,
+   use_pbl=.false.,gpstop=30.,
+   use_gfs_nemsio=.false.,
+   use_gfs_ncio=.true.,
+   lwrite_peakwt=.true.,
+   print_diag_pcg=.true.,
+   newpc4pred=.true., adp_anglebc=.true., angord=4,
+   passive_bc=.true., use_edges=.false., emiss_bc=.true.,
+   diag_precon=.true., step_start=1.e-3,
+   lread_obs_save=.true.,
+   lread_obs_skip=.false.,
+   ens_nstarthr=01,
+   netcdf_diag=.true.,binary_diag=.false.,
+ /
+ &GRIDOPTS
+   fv3_regional=.true.,grid_ratio_fv3_regional=1.0,nvege_type=20,
+   nlon=396,nlat=232,nsig=60,
+ /
+ &BKGERR
+   hzscl=0.373,0.746,1.50,
+   vs=1.,bw=0.,fstat=.false.,
+ /
+ &ANBKGERR
+   anisotropic=.false.,
+ /
+ &JCOPTS
+ /
+ &STRONGOPTS
+   nstrong=0,
+ /
+ &OBSQC
+   dfact=0.75,dfact1=3.0,noiqc=.false.,c_varqc=0.02,
+   vadfile='prepbufr',njqc=.false.,vqc=.false.,
+   aircraft_t_bc=.true.,biaspredt=1000.0,upd_aircraft=.true.,cleanup_tail=.true.,
+ /
+ &OBS_INPUT
+   dmesh(1)=120.0,dmesh(2)=60.0,time_window_max=1.5,ext_sonde=.true.,
+ /
+OBS_INPUT::
+!  dfile          dtype       dplat     dsis                 dval    dthin dsfcalc
+   prepbufr       ps          null      ps                   1.0     0     0
+   prepbufr       t           null      t                    1.0     0     0
+   prepbufr       q           null      q                    1.0     0     0
+!   prepbufr       pw          null      pw                   1.0     0     0
+   prepbufr       uv          null      uv                   1.0     0     0
+::
+ &SUPEROB_RADAR
+   del_azimuth=5.,del_elev=.25,del_range=5000.,del_time=.5,elev_angle_max=5.,minnum=50,range_max=100000.,
+   l2superob_only=.false.,
+ /
+ &LAG_DATA
+ /
+ &HYBRID_ENSEMBLE
+   l_hyb_ens=.false.,
+   n_ens=20,
+   uv_hyb_ens=.false.,
+   beta_s0=0.0,
+   s_ens_h=110,
+   s_ens_v=3,
+   readin_localization=.true.,
+   generate_ens=.false.,
+   regional_ensemble_option=5,
+   fv3sar_bg_opt=0,
+   aniso_a_en=.false.,
+   nlon_ens=0,
+   nlat_ens=0,
+   jcap_ens=574,
+   l_ens_in_diff_time=.true.,
+   jcap_ens_test=0,
+   full_ensemble=.false.,
+   pwgtflg=.true.,
+   ensemble_path="",
+   l_both_fv3sar_gfs_ens=.false.,
+   n_ens_gfs=0,
+   n_ens_fv3sar=20,
+ /
+ &RAPIDREFRESH_CLDSURF
+   i_gsdcldanal_type=0,
+   dfi_radar_latent_heat_time_period=20.0,
+   l_use_hydroretrieval_all=.false.,
+   metar_impact_radius=10.0,
+   metar_impact_radius_lowCloud=4.0,
+   l_gsd_terrain_match_surfTobs=.false.,
+   l_sfcobserror_ramp_t=.false.,
+   l_sfcobserror_ramp_q=.false.,
+   l_PBL_pseudo_SurfobsT=.false.,
+   l_PBL_pseudo_SurfobsQ=.false.,
+   l_PBL_pseudo_SurfobsUV=.false.,
+   pblH_ration=0.75,
+   pps_press_incr=20.0,
+   l_gsd_limit_ocean_q=.false.,
+   l_pw_hgt_adjust=.false.,
+   l_limit_pw_innov=.false.,
+   max_innov_pct=0.1,
+   l_cleanSnow_WarmTs=.false.,
+   r_cleanSnow_WarmTs_threshold=5.0,
+   l_conserve_thetaV=.false.,
+   i_conserve_thetaV_iternum=3,
+   l_cld_bld=.false.,
+   cld_bld_hgt=1200.0,
+   build_cloud_frac_p=0.50,
+   clear_cloud_frac_p=0.1,
+   iclean_hydro_withRef=1,
+   iclean_hydro_withRef_allcol=0,
+ /
+ &CHEM
+ /
+ &SINGLEOB_TEST
+ /
+ &NST
+ /
+
